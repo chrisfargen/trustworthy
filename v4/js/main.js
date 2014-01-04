@@ -450,7 +450,7 @@ var jsExp = {
     data.resultsCSV = JSON2CSV($.parseJSON(JSON.stringify(data.results)),0,0,1);
     
     // Send our data via post
-    $.post('http://cocosci.ec22.5746.in/trustworthy/post-sqlite.php', {'data' : data}, function(response) {
+    $.post('post-sqlite.php', {'data' : data}, function(response) {
       
       jsExp.$.active
         .append('<p>Data submitting...</p>');
