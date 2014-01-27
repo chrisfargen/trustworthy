@@ -3,7 +3,7 @@ var data = {
     'session' : {}
 };
 // Experiment object
-var e = {
+var ex = {
     '$' : {},
     // Cache jQuery Object corresponding to template slides, etc
     cacheElements : function() {
@@ -14,27 +14,27 @@ var e = {
 	    $(this).removeAttr('data-cache');
 	    if ( $(this).data('remove') !== undefined ) {
 		// Cache and remove
-		e.$[label] = $(this).removeAttr('data-remove').detach();
+		ex.$[label] = $(this).removeAttr('data-remove').detach();
 		return true;
 	    }
 	    // Cache
-	    e.$[label] = $(this);
+	    ex.$[label] = $(this);
 	    return true;
 	});
     },
     insertNext : function() {
 	// Add next button
-	$(".active").append(e.$.next);
+	$(".active").append(ex.$.next);
     },
     validateCon : function(c) {
 	switch(c) {
 	    case 'trust-mixed-2':
 		// Edit topbar
-		e.$['top-bar-text'].text("Trustworthiness > Condition " + c);
+		ex.$['top-bar-text'].text("Trustworthiness > Condition " + c);
 		return true;
 		break;
 	    default:
-		e.$['top-bar-text'].text("Trustworthiness > Condition " + c + ": Invalid condition supplied. Please check the URL.");
+		ex.$['top-bar-text'].text("Trustworthiness > Condition " + c + ": Invalid condition supplied. Please check the URL.");
 		break;
 	}
 	return false;
@@ -42,20 +42,20 @@ var e = {
     // Initialize a condition
     initCon : function(c) {
 	// Validate condition
-	if ( !e.validateCon(c) ) {
+	if ( !ex.validateCon(c) ) {
 	    return false;
 	}
 	// Loop through groups of examples
 	var i = 0;
 	// Abbreviate source group to use to populate content
 	var g = [
-	    alias[e.get.srcTrust],
-	    alias[e.get.srcBelief]
+	    alias[ex.get.srcTrust],
+	    alias[ex.get.srcBelief]
 		];
 	// Abbreviate new objects
-	var stb = e.$['slide-trust-before'].clone();
-	var sb = e.$['slide-belief'].clone();
-	var sta = e.$['slide-trust-after'].clone();
+	var stb = ex.$['slide-trust-before'].clone();
+	var sb = ex.$['slide-belief'].clone();
+	var sta = ex.$['slide-trust-after'].clone();
 	data.results[i] = {};
 	var popTrust = function(n) {
 	    // Populate content of trust slides
@@ -81,9 +81,9 @@ var e = {
 	$('.slider', sta).attr('data-save', 'data.results.' + i + '.trustAfter');
 	var threeSlides = $(stb).add(sb).add(sta);
 	// Insert the three slides before the last slide
-	e.$['slide-sports'].before(threeSlides);
+	ex.$['slide-sports'].before(threeSlides);
 	// Full-view mode
-	if (e.get.fullview) {
+	if (ex.get.fullview) {
 	    $('.slideshow > li').show();
 	}
 	return true;
@@ -96,9 +96,9 @@ var e = {
 	step: 1,
 	value: 4,
 	// On start of slide event
-	start: function( event, ui ) { e.valChange(this, ui.value); },
+	start: function( event, ui ) { ex.valChange(this, ui.value); },
 	// On slide event
-	slide: function( event, ui ) { e.valChange(this, ui.value); }
+	slide: function( event, ui ) { ex.valChange(this, ui.value); }
 	})
 	// Add customized labels
 	.each(function() {
@@ -138,7 +138,7 @@ var e = {
 		return true;
 	    }
 	    // Otherwise, what the heck?
-	    console.error('Unexpected name for scale.');
+	    consolex.error('Unexpected name for scalex.');
 	});
 	return true;
     },
@@ -153,7 +153,7 @@ var e = {
 	if ( !$li.hasClass('needs-input') ) {
 	    $li.addClass('needs-input');
 	}
-	//console.log('Input flag "' + getXPath(el) + '" registered.');
+	//consolex.log('Input flag "' + getXPath(el) + '" registered.');
 	return true;
     },
     okayInput : function(el) {
@@ -165,59 +165,59 @@ var e = {
 	if ( $el.hasClass('needs-input') ) {
 	    // Remove class "needs-input" from input element
 	    $el.removeClass('needs-input');
-	    //console.log('Input flag "' + getXPath(el) + '" deleted.');
+	    //consolex.log('Input flag "' + getXPath(el) + '" deleted.');
 	}
 	// Check to see if all inputs okay
 	if ( $li.hasClass('needs-input') && !$('[class*=needs-input]', $li).length ) {
 	    // Remove class
 	    $li.removeClass('needs-input');
-	    //console.log('Class "needs-input" removed from "' + $li.attr('class').split(" ")[0] + '".');
+	    //consolex.log('Class "needs-input" removed from "' + $li.attr('class').split(" ")[0] + '".');
 	}
 	return true;
     },
     // Activate the next slide
     next : function() {
 	// Cache this slide
-	e.$.active = $('.active');
+	ex.$.active = $('.active');
 	// Remove focus from handle, if it's focused.
-	if ( e.$.handle && e.$.handle.length > 0 ) {
-	    e.$.handle.blur();
+	if ( ex.$.handle && ex.$.handle.length > 0 ) {
+	    ex.$.handle.blur();
 	}
 	// If we still need something, cancel the attempt
-	if (e.$.active.filter('[class*=needs]').length) {
+	if (ex.$.active.filter('[class*=needs]').length) {
 	    return false;
 	}
-	// Otherwise...
+	// Otherwisex...
 	// Swap .active classes
-	e.$.active = e.$.active
+	ex.$.active = ex.$.active
 	    .removeClass('active')
 	    .next()
 	    .addClass('active needs-timeout');
 	// Check for the post flag
-	if (e.$.active.data("event") === "post") {
-	    e.post();
+	if (ex.$.active.data("event") === "post") {
+	    ex.post();
 	    return null;
 	}
 	// Reset timeout
-	e.timeout.reset( ( Number( e.$.active.data('delay')) || 0 ) || 3000 );
+	ex.timeout.reset( ( Number( ex.$.active.data('delay')) || 0 ) || 3000 );
 	// Register inputs
-	$('[data-required]', e.$.active).each(function() {
-	    e.registerInput(this);
+	$('[data-required]', ex.$.active).each(function() {
+	    ex.registerInput(this);
 	});
 	// Fix this later to avoid wrapping in anon fun
 	// Add events to input elements
-	$('input[data-save], select[data-save], textarea[data-save]', e.$.active)
-	    .keyup( function(){e.valChange(this);} )
-	    .change( function(){e.valChange(this);} );
+	$('input[data-save], select[data-save], textarea[data-save]', ex.$.active)
+	    .keyup( function(){ex.valChange(this);} )
+	    .change( function(){ex.valChange(this);} );
 	// Label
-	e.$.next.text(e.$.active.data('next') || "Next");
+	ex.$.next.text(ex.$.active.data('next') || "Next");
 	// Insert next button
-	e.insertNext();
+	ex.insertNext();
 	// Cache slider handle
-	e.$.handle = $('.active .ui-slider-handle');
+	ex.$.handle = $('.active .ui-slider-handle');
 	// Focus the handle
-	if ( e.$.handle && e.$.handle.length > 0 ) {
-	    e.$.handle.focus();
+	if ( ex.$.handle && ex.$.handle.length > 0 ) {
+	    ex.$.handle.focus();
 	}
 	return true;
     },
@@ -225,17 +225,17 @@ var e = {
 	reset : function(delay) {
 	    var d = delay || 0;
 	    // Test mode
-	    d *= (e.testMode == 1 ? 0 : 1);
+	    d *= (ex.testMode == 1 ? 0 : 1);
 	    // Clear the timeout so they overwrite properly
-	    window.clearTimeout(e.timeout.ID);
-	    e.timeout.ID = window.setTimeout(
+	    window.clearTimeout(ex.timeout.ID);
+	    ex.timeout.ID = window.setTimeout(
 		    function(){
 			// Remove class
 			$('.active').removeClass("needs-timeout");
 			// Bump slider, if any
-			var $slider = $('.slider', e.$.active);
+			var $slider = $('.slider', ex.$.active);
 			if ($slider.length !== 0) {
-			    e.valChange( $slider[0], $slider.slider('value') );
+			    ex.valChange( $slider[0], $slider.slider('value') );
 			}
 		    },
 		    d
@@ -247,8 +247,8 @@ var e = {
 	val = val || $(el).val();
 	var key = $(el).attr('data-save');
 	setKey(key, val);
-	//console.log(key + " : " + val);
-	e.okayInput(el);
+	//consolex.log(key + " : " + val);
+	ex.okayInput(el);
 	return true;
     },
     keyHandler : function() {
@@ -260,8 +260,8 @@ var e = {
 		case 32:
 		    // If user is not focusing on input...
 		    if ( !$("input, select, textarea").is(":focus") ) {
-			// ...attempt to go to next slide.
-			e.next();
+			// ...attempt to go to next slidex.
+			ex.next();
 			return null;
 		    }
 		    break;
@@ -270,8 +270,8 @@ var e = {
 		case 38:
 		case 39:
 		case 40:
-		    if ( e.$.handle && e.$.handle.length > 0 ) {
-			e.$.handle.focus();
+		    if ( ex.$.handle && ex.$.handle.length > 0 ) {
+			ex.$.handle.focus();
 		    }
 		    break;
 		default:
@@ -282,7 +282,7 @@ var e = {
 	return true;
     },
     post: function() {
-	e.$.active.append('<p>Submitting data...</p>');
+	ex.$.active.append('<p>Submitting data...</p>');
 	// Get end time
 	data.session.submit = dateTime(new Date);
 	// Validate "Sport-Other"
@@ -292,21 +292,21 @@ var e = {
 	// Create CSV
 	data.resultsCSV = JSON2CSV($.parseJSON(JSON.stringify(data.results)),0,0,1);
 	// Send our data via post
-	$.post('post-sqlite.php', {'data' : data}, function(response) {
-	    e.$.active
+	$.post('post-sqlitex.php', {'data' : data}, function(response) {
+	    ex.$.active
 	    .append('<p>Data submitting...</p>');
-	console.log(response);
+	consolex.log(response);
 	return true;
 	})
 	.fail(function() {
-	    e.$.active.append('<p>There was an error. Please contact the admin.</p>');
+	    ex.$.active.append('<p>There was an error. Please contact the admin.</p>');
 	    return false;
 	})
 	.always(function() {
 	    if (data.session.ref !== "turk") {
 		return null;
 	    }
-	    e.$.active.append('<p>To receive credit, copy the code below into Amazon Turk.</p><p>Code: <input style="padding: 0.3em 1em;" value="' + data.session.refId + '" /></p>');
+	    ex.$.active.append('<p>To receive credit, copy the code below into Amazon Turk.</p><p>Code: <input style="padding: 0.3em 1em;" value="' + data.session.refId + '" /></p>');
 	    return true;
 	});
 	return true;
@@ -317,36 +317,36 @@ $(function() {
     // Get start time
     data.session.start = dateTime(new Date());
     // Get the get variables
-    e.get = getQueryParams(document.location.search);
+    ex.get = getQueryParams(document.location.search);
     // Get the referer
-    data.session.ref = e.get.ref || "";
+    data.session.ref = ex.get.ref || "";
     //data.session.refId = "000000";
     data.session.refId = rand(100000,999999);
     // URL
     data.session.url = document.location.href;
     // Set test mode
-    e.testMode = e.get.test || 0;
-    data.session.workerId = e.get.workerId || 0;
+    ex.testMode = ex.get.test || 0;
+    data.session.workerId = ex.get.workerId || 0;
     // Project label
     // project,condition,mode,version
-    data.session.project = ["trust-mixed", e.get.c, (e.testMode == 1 ? "test" : "normal"), "2013-06-14"].join();
+    data.session.project = ["trust-mixed", ex.get.c, (ex.testMode == 1 ? "test" : "normal"), "2013-06-14"].join();
     // Cache and/or remove template slides
-    e.cacheElements();
+    ex.cacheElements();
     // Initialize condition
-    if ( !e.initCon(e.get.c) ) {
+    if ( !ex.initCon(ex.get.c) ) {
 	return false;
     }
     // Initialize sliders
-    e.initSliders();
+    ex.initSliders();
     // Click events
-    e.$.next
-	.click(e.next)
+    ex.$.next
+	.click(ex.next)
 	.mousedown(function(){$(this).addClass('mousedown')})
 	.mouseup(function(){$(this).removeClass('mousedown')})
 	.mouseout(function(){$(this).removeClass('mousedown')});
     // Add 'Next' button to slide
-    e.insertNext();
+    ex.insertNext();
     // On any key press
-    e.keyHandler();
+    ex.keyHandler();
     return true;
 });
