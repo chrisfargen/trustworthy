@@ -208,36 +208,36 @@ var src = {
 
 var alias = {
 
-  "the Nature Conse..." : src.results[0][0], // 0
+  "the Nature Conse..." : src.results[0][0],
 
-  "the Electrical E..." : src.results[0][1], // 1
+  "the Electrical E..." : src.results[0][1],
 
-  "Albert Einstein..." : src.results[1][0], // 2
+  "Albert Einstein..." : src.results[1][0],
 
-  "the Food and Dru..." : src.results[1][1], // 3
+  "the Food and Dru..." : src.results[1][1],
 
-  "the National Ins..." : src.results[2][0], // 4
+  "the National Ins..." : src.results[2][0],
 
-  "the Internationa..." : src.results[2][1], // 5
+  "the Internationa..." : src.results[2][1],
 
-  "a group of NASA ..." : src.results[3][0], // 6
+  "a group of NASA ..." : src.results[3][0],
 
-  "the American Aca..." : src.results[3][1], // 7
+  "the American Aca..." : src.results[3][1],
 
-  "Julia Child..." : src.results[4][0], // 8
+  "Julia Child..." : src.results[4][0],
 
-  "the American Soc..." : src.results[4][1], // 9
+  "the American Soc..." : src.results[4][1],
 
-  "the World Health..." : src.results[5][0], // 10
+  "the World Health..." : src.results[5][0],
 
-  "the American Mat..." : src.results[5][1], // 11
+  "the American Mat..." : src.results[5][1],
 
-  "the American Med..." : src.results[6][0], // 12
+  "the American Med..." : src.results[6][0],
 
-  "Jane Goodall..." : src.results[6][1], // 13
+  "Jane Goodall..." : src.results[6][1],
 
-  "the American Psy..." : src.results[7][0], // 14
+  "the American Psy..." : src.results[7][0],
 
-  "the National Blo..." : src.results[7][1] // 15
+  "the National Blo..." : src.results[7][1]
 
 };
