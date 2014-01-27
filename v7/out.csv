@@ -1,3 +1,0 @@
-project,ref,refId,start,submit,test,url,workerId,sessionId,sourceBelief,sourceTrust,trustBefore,belief,trustAfter
-"trust-mixed,trust-mixed-2,test,2013-06-14","",265317,"2014-01-04 03:47:14","2014-01-04 03:47:23","Soccer,asd",http://cocosci.ec22.5746.in/trustworthy/v4/?c=trust-mixed-2&workerId=test12345&srcTrust=the%20Nature%20Conse...&srcBelief=the%20Nature%20Conse...&test=1,test12345,1,"the Nature Conse...","the Nature Conse...",7,7,7
-"trust-mixed,trust-mixed-2,test,2013-06-14","",635764,"2014-01-04 03:47:32","2014-01-04 03:47:45","Other...,I don't know",http://cocosci.ec22.5746.in/trustworthy/v4/?c=trust-mixed-2&workerId=test12345&srcTrust=the%20Nature%20Conse...&srcBelief=the%20Nature%20Conse...&test=1,test12345,2,"the Nature Conse...","the Nature Conse...",1,2,5

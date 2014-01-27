@@ -45,43 +45,89 @@ var ex = {
 	if ( !ex.validateCon(c) ) {
 	    return false;
 	}
-	// Loop through groups of examples
-	var i = 0;
+	if (source.results[ex.get.srcTrust].group !== source.results[ex.get.srcBelief].group) {
+	    console.log("Error! Groups not the same");
+	    return false;
+	}
+	else {
+	    var groupId = source.results[ex.get.srcTrust].group;
+	    console.log( "groupId is " + groupId );
+	}
 	// Abbreviate source group to use to populate content
-	var g = [
-	    alias[ex.get.srcTrust],
-	    alias[ex.get.srcBelief]
-		];
-	// Abbreviate new objects
-	var stb = ex.$['slide-trust-before'].clone();
-	var sb = ex.$['slide-belief'].clone();
-	var sta = ex.$['slide-trust-after'].clone();
-	data.results[i] = {};
-	var popTrust = function(n) {
-	    // Populate content of trust slides
-	    // Before
-	    $('.source', stb).text( g[n].source );
-	    $('.subject', stb).text( g[n].subject );
-	    // After
-	    $('.source', sta).text( g[n].source );
-	    $('.subject', sta).text( g[n].subject );
+	console.log("srcTrust is " + ex.get.srcTrust + " and group is " + source.results[ex.get.srcTrust].group );
+	console.log("srcBelief is " + ex.get.srcBelief + " and group is " + source.results[ex.get.srcBelief].group );
+
+	/* var groupedItems = (function() {
+	   var arr = [];
+	   _.each(source.results,function(item){
+	   if (!arr[item.group]) arr[item.group] = [];
+	   arr[item.group].push(item); 
+	   });
+	   return arr;
+	   })(); */
+
+	// Group items
+	var groupedItems = _.toArray(
+		_.groupBy(source.results, function(item){ return item.group; })
+		);
+	// Pick out the predetermined first pair
+	groupedItems.splice(groupId,1)[0];
+
+	// Specify the order of the first one
+	// This is the only one we will specify order for
+	// The rest will be randomly ordered
+	// The order is [trust,belief]
+	var firstPair = [
+	    source.results[ex.get.srcTrust],
+	    source.results[ex.get.srcBelief]
+	    ];
+	
+	// Randomize the belief vs trust
+	_.each(groupedItems, function(val, key, list) {
+	    groupedItems[key] = _.shuffle(val);
+	});
+
+	// Randomize the remaining items
+	groupedItems = _.shuffle(groupedItems);
+
+	// Splice the first item
+	groupedItems.splice(0,0,firstPair);
+
+	// Loop
+	for (var j = 0; j < groupedItems.length; j++) {
+	    console.log( j );
+	    var g = groupedItems[j];
+	    console.log( g );
+	    // Abbreviate new objects
+	    var stb = ex.$['slide-trust-before'].clone();
+	    var sb = ex.$['slide-belief'].clone();
+	    var sta = ex.$['slide-trust-after'].clone();
+	    data.results[j] = {};
+	    (function() {
+		// Populate content of trust slides
+		// Before
+		$('.source', stb).text( g[0].source );
+		$('.subject', stb).text( g[0].subject );
+		// After
+		$('.source', sta).text( g[0].source );
+		$('.subject', sta).text( g[0].subject );
+		// Record presets
+		data.results[j].sourceTrust = g[0].id;
+	    })();
+	    // No correspondence
+	    $('.source', sb).text( capitalizeFirst( g[1].source ) );
+	    $('.statement', sb).text( capitalizeFirst( g[1].statement ) );
 	    // Record presets
-	    data.results[i].sourceTrust = g[n].source.substring(0,16)+"...";
-	};
-	// Populate content
-	popTrust(0);
-	// No correspondence
-	$('.source', sb).text( capitalizeFirst( g[1].source ) );
-	$('.statement', sb).text( capitalizeFirst( g[1].statement ) );
-	// Record presets
-	data.results[i].sourceBelief = g[1].source.substring(0,16)+"...";
-	// Specify location to which we will save user input
-	$('.slider', stb).attr('data-save', 'data.results.' + i + '.trustBefore');
-	$('.slider', sb).attr('data-save', 'data.results.' + i + '.belief');
-	$('.slider', sta).attr('data-save', 'data.results.' + i + '.trustAfter');
-	var threeSlides = $(stb).add(sb).add(sta);
-	// Insert the three slides before the last slide
-	ex.$['slide-sports'].before(threeSlides);
+	    data.results[j].sourceBelief = g[1].id;
+	    // Specify location to which we will save user input
+	    $('.slider', stb).attr('data-save', 'data.results.' + j + '.trustBefore');
+	    $('.slider', sb).attr('data-save', 'data.results.' + j + '.belief');
+	    $('.slider', sta).attr('data-save', 'data.results.' + j + '.trustAfter');
+	    var threeSlides = $(stb).add(sb).add(sta);
+	    // Insert the three slides before the last slide
+	    ex.$['slide-sports'].before(threeSlides);
+
+	}
 	// Full-view mode
 	if (ex.get.fullview) {
 	    $('.slideshow > li').show();
@@ -292,7 +338,7 @@ var ex = {
 	// Create CSV
 	data.resultsCSV = JSON2CSV($.parseJSON(JSON.stringify(data.results)),0,0,1);
 	// Send our data via post
-	$.post('post-sqlitex.php', {'data' : data}, function(response) {
+	$.post('post-sqlite.php', {'data' : data}, function(response) {
 	    ex.$.active
 	    .append('<p>Data submitting...</p>');
 	consolex.log(response);
