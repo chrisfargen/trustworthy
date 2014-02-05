@@ -28,7 +28,7 @@ var ex = {
     },
     validateCon : function(c) {
 	switch(c) {
-	    case 'trust-mixed-2':
+	    case 'trust-mixed-2014':
 		// Edit topbar
 		ex.$['top-bar-text'].text("Trustworthiness > Condition " + c);
 		return true;
@@ -119,6 +119,8 @@ var ex = {
 	    $('.statement', sb).text( capitalizeFirst( g[1].statement ) );
 	    // Record presets
 	    data.results[j].sourceBelief = g[1].id;
+	    // Specify order
+	    data.results[j].orderAppeared = j;
 	    // Specify location to which we will save user input
 	    $('.slider', stb).attr('data-save', 'data.results.' + j + '.trustBefore');
 	    $('.slider', sb).attr('data-save', 'data.results.' + j + '.belief');
@@ -184,7 +186,7 @@ var ex = {
 		return true;
 	    }
 	    // Otherwise, what the heck?
-	    consolex.error('Unexpected name for scalex.');
+	    console.error('Unexpected name for scalex.');
 	});
 	return true;
     },
@@ -199,7 +201,7 @@ var ex = {
 	if ( !$li.hasClass('needs-input') ) {
 	    $li.addClass('needs-input');
 	}
-	//consolex.log('Input flag "' + getXPath(el) + '" registered.');
+	//console.log('Input flag "' + getXPath(el) + '" registered.');
 	return true;
     },
     okayInput : function(el) {
@@ -211,13 +213,13 @@ var ex = {
 	if ( $el.hasClass('needs-input') ) {
 	    // Remove class "needs-input" from input element
 	    $el.removeClass('needs-input');
-	    //consolex.log('Input flag "' + getXPath(el) + '" deleted.');
+	    //console.log('Input flag "' + getXPath(el) + '" deleted.');
 	}
 	// Check to see if all inputs okay
 	if ( $li.hasClass('needs-input') && !$('[class*=needs-input]', $li).length ) {
 	    // Remove class
 	    $li.removeClass('needs-input');
-	    //consolex.log('Class "needs-input" removed from "' + $li.attr('class').split(" ")[0] + '".');
+	    //console.log('Class "needs-input" removed from "' + $li.attr('class').split(" ")[0] + '".');
 	}
 	return true;
     },
@@ -293,7 +295,7 @@ var ex = {
 	val = val || $(el).val();
 	var key = $(el).attr('data-save');
 	setKey(key, val);
-	//consolex.log(key + " : " + val);
+	//console.log(key + " : " + val);
 	ex.okayInput(el);
 	return true;
     },
@@ -341,7 +343,7 @@ var ex = {
 	$.post('post-sqlite.php', {'data' : data}, function(response) {
 	    ex.$.active
 	    .append('<p>Data submitting...</p>');
-	consolex.log(response);
+	console.log(response);
 	return true;
 	})
 	.fail(function() {
